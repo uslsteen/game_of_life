@@ -1,10 +1,10 @@
-#include "game_life.hh"
+#include "game_life.h"
 
 //
 void field_init(field_t *surf) {
   //
-  surf->width = graph_impl::AppParams::WIDTH;
-  surf->heigth = graph_impl::AppParams::HEIGHT;
+  surf->width = WIDTH;
+  surf->heigth = HEIGHT;
 
   for (size_t x = 0; x < surf->width; ++x)
     for (size_t y = 0; y < surf->heigth; ++y) {
@@ -74,11 +74,11 @@ void draw_field(field_t *surf) {
 
       switch (get_cell(surf, cell)) {
       case 1: {
-        graph_impl::set_pixel(cell.x, cell.y, GREEN);
+        set_pixel(cell.x, cell.y, GREEN);
         break;
       }
       case 0: {
-        graph_impl::set_pixel(cell.x, cell.y, BLACK);
+        set_pixel(cell.x, cell.y, BLACK);
         break;
       }
       default:

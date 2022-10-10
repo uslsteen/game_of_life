@@ -2,19 +2,20 @@
 #define GAME_LIFE
 
 #include "graph_wrapp.hh"
+//
+#include <stdlib.h>
 
 #define EPS 0.1
 
-struct cell_t {
+typedef struct cell_t {
   size_t x, y;
-};
+} cell_t;
 
-struct field_t {
-  uint8_t field[graph_impl::AppParams::WIDTH][graph_impl::AppParams::HEIGHT];
-  uint32_t width = 0;
-  uint32_t heigth = 0;
-};
-// using field_t = uint8_t *;
+typedef struct field_t {
+  uint8_t field[WIDTH][HEIGHT];
+  uint32_t width;
+  uint32_t heigth;
+} field_t;
 
 enum State { DEAD = 0, ALIVE = 1, NONE };
 
