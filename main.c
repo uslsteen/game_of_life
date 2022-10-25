@@ -125,7 +125,7 @@ void swap() {
 //
 int main() {
   graph_init();
-  field_init(&main_field);
+  field_init();
 
   while (is_open_window()) {
     window_clear(BLACK);
