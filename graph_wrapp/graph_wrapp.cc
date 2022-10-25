@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 
-
 namespace graph_impl {
 //! NOTE: imagine here SfmlImpl class realziation
 static sf::RenderWindow window;
@@ -11,7 +10,6 @@ static sf::Texture texture;
 static sf::Sprite sprite;
 //
 } // namespace graph_impl
-
 
 #ifdef __cplusplus
 extern "C" {

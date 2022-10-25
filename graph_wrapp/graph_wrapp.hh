@@ -1,9 +1,9 @@
 #ifndef GL_WRAPP
 #define GL_WRAPP
 
-#include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 
 #define GREEN 0, 255, 0
 #define BLACK 0, 0, 0
@@ -11,7 +11,6 @@
 #define RECT_SIZE 1.0, 1.0
 
 enum AppParams { WIDTH = 800, HEIGHT = 800 };
-
 
 #ifdef __cplusplus
 extern "C" {
