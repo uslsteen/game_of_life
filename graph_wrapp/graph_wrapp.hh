@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#define EPS 0.1
 
 #define GREEN 0, 255, 0
 #define BLACK 0, 0, 0
@@ -56,6 +59,8 @@ void flush();
  * @param b
  */
 void set_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
+
+int get_random_val();
 
 #ifdef __cplusplus
 }

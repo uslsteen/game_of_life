@@ -2,8 +2,6 @@
 //
 #include <stdlib.h>
 
-#define EPS 0.1
-
 typedef struct cell_t {
   size_t x, y;
 } cell_t;
@@ -22,10 +20,8 @@ enum State { DEAD = 0, ALIVE = 1, NONE };
 void field_init() {
   //
   for (size_t x = 0; x < WIDTH; ++x)
-    for (size_t y = 0; y < HEIGHT; ++y) {
-      double radius = (double)rand() / RAND_MAX;
-      main_field.field[y][x] = radius < EPS;
-    }
+    for (size_t y = 0; y < HEIGHT; ++y)
+      main_field.field[y][x] = get_random_val();
 }
 
 //

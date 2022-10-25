@@ -39,6 +39,11 @@ void set_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
 
   graph_impl::window.draw(pixel);
 }
+
+int get_random_val() {
+    double radius = (double)rand() / RAND_MAX;
+    return radius < EPS;
+}
 #ifdef __cplusplus
 }
 #endif
