@@ -6,13 +6,7 @@ typedef struct cell_t {
   size_t x, y;
 } cell_t;
 
-typedef struct field_t {
-  uint8_t field[WIDTH][HEIGHT];
-  uint32_t width;
-  uint32_t heigth;
-} field_t;
-
-field_t main_field, tmp_field;
+uint8_t main_field[WIDTH][HEIGHT], tmp_field[WIDTH][HEIGHT];
 
 enum State { DEAD = 0, ALIVE = 1, NONE };
 
@@ -21,19 +15,19 @@ void field_init() {
   //
   for (size_t x = 0; x < WIDTH; ++x)
     for (size_t y = 0; y < HEIGHT; ++y)
-      main_field.field[y][x] = get_random_val();
+      main_field[y][x] = get_random_val();
 }
 
 //
 int get_cell(cell_t cell) {
 
   int x = (cell.x + WIDTH) % WIDTH, y = (cell.y + HEIGHT) % HEIGHT;
-  return main_field.field[y][x];
+  return main_field[y][x];
 }
 
 //
 void set_cell(cell_t cell, enum State state) {
-  tmp_field.field[cell.y][cell.x] = state;
+  tmp_field[cell.y][cell.x] = state;
 }
 
 //
@@ -111,9 +105,9 @@ void swap() {
   //
   for (size_t x = 0; x < WIDTH; ++x) {
     for (size_t y = 0; y < HEIGHT; ++y) {
-        tmp = main_field.field[y][x];
-        main_field.field[y][x] = tmp_field.field[y][x];
-        tmp_field.field[y][x] = tmp;
+        tmp = main_field[y][x];
+        main_field[y][x] = tmp_field[y][x];
+        tmp_field[y][x] = tmp;
     }
   }
 }
