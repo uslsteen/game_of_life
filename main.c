@@ -26,11 +26,6 @@ int get_cell(cell_t cell) {
 }
 
 //
-void set_cell(cell_t cell, enum State state) {
-  tmp_field[cell.y][cell.x] = state;
-}
-
-//
 int get_neighbours_num(cell_t cell) {
   int num = 0;
   for (int id_x = -1; id_x <= 1; ++id_x) {
@@ -66,7 +61,7 @@ void make_next_gen() {
         else
           state = DEAD;
       }
-      set_cell(cell, state);
+      tmp_field[cell.y][cell.x] = state;
     }
   }
 }
