@@ -13,7 +13,7 @@
 
 #define RECT_SIZE 1.0, 1.0
 
-enum AppParams { WIDTH = 800, HEIGHT = 800 };
+enum AppParams { APP_WIDTH = 800, APP_HEIGHT = 800 };
 
 #ifdef __cplusplus
 extern "C" {

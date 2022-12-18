@@ -15,7 +15,7 @@ static sf::Sprite sprite;
 extern "C" {
 #endif
 void graph_init() {
-  uint32_t h = AppParams::HEIGHT, w = AppParams::WIDTH;
+  uint32_t h = AppParams::APP_HEIGHT, w = AppParams::APP_WIDTH;
   //
   graph_impl::window.create(sf::VideoMode(w, h), "Game of Life");
   graph_impl::buffer.create(w, h, sf::Color(BLACK));

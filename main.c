@@ -2,41 +2,38 @@
 //
 #include <stdlib.h>
 
-typedef struct cell_t {
-  size_t x, y;
-} cell_t;
+int WIDTH = 800;
+int HEIGHT = 800;
 
-uint8_t main_field[WIDTH][HEIGHT], tmp_field[WIDTH][HEIGHT];
+uint8_t main_field[800 * 800], tmp_field[800 * 800];
 
-enum State { DEAD = 0, ALIVE = 1, NONE };
+int DEAD = 0;
+int ALIVE = 1;
+int NONE = 2;
 
 //
 void field_init() {
   //
-  for (size_t x = 0; x < WIDTH; ++x)
-    for (size_t y = 0; y < HEIGHT; ++y)
-      main_field[y][x] = get_random_val();
+  for (size_t x = 0; x < WIDTH * HEIGHT; ++x)
+      main_field[x] = get_random_val();
 }
 
 //
-int get_cell(cell_t cell) {
+int get_cell(int x, int y) {
 
-  int x = (cell.x + WIDTH) % WIDTH, y = (cell.y + HEIGHT) % HEIGHT;
-  return main_field[y][x];
+  int res_x = (x + WIDTH) % WIDTH;
+  int res_y = (y + HEIGHT) % HEIGHT;
+  return main_field[res_y * WIDTH + res_x];
 }
 
 //
-int get_neighbours_num(cell_t cell) {
+int get_neighbours_num(int x, int y) {
   int num = 0;
-  for (int id_x = -1; id_x <= 1; ++id_x) {
-    for (int id_y = -1; id_y <= 1; ++id_y) {
-      cell_t other_cell = {id_x + cell.x, id_y + cell.y};
-      if ((id_x == 0) && (id_y == 0))
-        continue;
-      else
-        num += get_cell(other_cell);
-    }
-  }
+
+  num = get_cell(x - 1, y - 1) + get_cell(x, y - 1) + get_cell(x + 1, y - 1) +
+        get_cell(x + 1, y) + get_cell(x + 1, y + 1) + get_cell(x, y + 1) +
+        get_cell(x - 1, y + 1) + get_cell(x - 1, y);
+  //
   return num;
 }
 
@@ -46,22 +43,23 @@ void make_next_gen() {
   for (size_t y = 0; y < HEIGHT; ++y) {
     for (size_t x = 0; x < WIDTH; ++x) {
       //
-      cell_t cell = {x, y};
-      enum State state = NONE;
-      int neighbrs_num = get_neighbours_num(cell);
-
-      if (get_cell(cell)) {
+      int state = NONE;
+      int neighbrs_num = get_neighbours_num(x, y);
+      int cur_cell = get_cell(x, y);
+      //
+      if (cur_cell == 1) {
         if (neighbrs_num == 2 || neighbrs_num == 3)
           state = ALIVE;
         else
           state = DEAD;
-      } else {
+      }
+      if (cur_cell == 0) {
         if (neighbrs_num == 3)
           state = ALIVE;
         else
           state = DEAD;
       }
-      tmp_field[cell.y][cell.x] = state;
+      tmp_field[y * WIDTH + x] = state;
     }
   }
 }
@@ -71,20 +69,12 @@ void draw_field() {
   //
   for (size_t x = 0; x < WIDTH; ++x) {
     for (size_t y = 0; y < HEIGHT; ++y) {
-      cell_t cell = {x, y};
-      //
-      switch (get_cell(cell)) {
-      case 1: {
-        set_pixel(cell.x, cell.y, GREEN);
-        break;
-      }
-      case 0: {
-        set_pixel(cell.x, cell.y, BLACK);
-        break;
-      }
-      default:
-        break;
-      }
+      int cur_cell = get_cell(x, y);
+
+      if (cur_cell == 1)
+        set_pixel(x, y, 0, 255, 0);
+      if (cur_cell == 0)
+        set_pixel(x, y, 0, 0, 0);
     }
   }
 }
@@ -96,15 +86,9 @@ void draw_field() {
  * @param tmp_field
  */
 void swap() {
-  uint8_t tmp = 0;
   //
-  for (size_t x = 0; x < WIDTH; ++x) {
-    for (size_t y = 0; y < HEIGHT; ++y) {
-        tmp = main_field[y][x];
-        main_field[y][x] = tmp_field[y][x];
-        tmp_field[y][x] = tmp;
-    }
-  }
+  for (int x = 0; x < WIDTH * HEIGHT; ++x)
+    main_field[x] = tmp_field[x];
 }
 
 //
@@ -113,7 +97,7 @@ int main() {
   field_init();
 
   while (is_open_window()) {
-    window_clear(BLACK);
+    window_clear(0, 0, 0);
     //
     make_next_gen();
     draw_field();
