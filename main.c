@@ -14,8 +14,12 @@ int NONE = 2;
 //
 void field_init() {
   //
-  for (size_t x = 0; x < WIDTH * HEIGHT; ++x)
-      main_field[x] = get_random_val();
+  int x = 0;
+
+  while (x < WIDTH * HEIGHT) {
+    main_field[x] = get_random_val();
+    x = x + 1;
+  }
 }
 
 //
@@ -40,42 +44,59 @@ int get_neighbours_num(int x, int y) {
 //
 void make_next_gen() {
   //
-  for (size_t y = 0; y < HEIGHT; ++y) {
-    for (size_t x = 0; x < WIDTH; ++x) {
+  int y = 0;
+  int x = 0;
+  while (y < HEIGHT) {
+    while (x < WIDTH) {
       //
       int state = NONE;
       int neighbrs_num = get_neighbours_num(x, y);
       int cur_cell = get_cell(x, y);
       //
       if (cur_cell == 1) {
-        if (neighbrs_num == 2 || neighbrs_num == 3)
+        if (neighbrs_num == 2 || neighbrs_num == 3) {
           state = ALIVE;
-        else
+        }
+        if (neighbrs_num < 2 || neighbrs_num > 3) {
           state = DEAD;
+        }
       }
       if (cur_cell == 0) {
-        if (neighbrs_num == 3)
+        if (neighbrs_num == 3) {
           state = ALIVE;
-        else
+        }
+        if (neighbrs_num < 3 || neighbrs_num > 3) {
           state = DEAD;
+        }
       }
       tmp_field[y * WIDTH + x] = state;
+      x = x + 1;
     }
+    y = y + 1;
+    x = 0;
   }
 }
 //
 
 void draw_field() {
   //
-  for (size_t x = 0; x < WIDTH; ++x) {
-    for (size_t y = 0; y < HEIGHT; ++y) {
+  int x = 0;
+  int y = 0;
+
+  while (x < WIDTH) {
+    while (y < HEIGHT) {
       int cur_cell = get_cell(x, y);
 
-      if (cur_cell == 1)
+      if (cur_cell == 1) {
         set_pixel(x, y, 0, 255, 0);
-      if (cur_cell == 0)
+      }
+      if (cur_cell == 0) {
         set_pixel(x, y, 0, 0, 0);
+      }
+      y = y + 1;
     }
+    x = x + 1;
+    y = 0;
   }
 }
 
@@ -87,8 +108,12 @@ void draw_field() {
  */
 void swap() {
   //
-  for (int x = 0; x < WIDTH * HEIGHT; ++x)
+  int x = 0;
+
+  while (x < WIDTH * HEIGHT) {
     main_field[x] = tmp_field[x];
+    x = x + 1;
+  }
 }
 
 //
